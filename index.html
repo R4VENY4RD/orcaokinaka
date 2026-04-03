@@ -162,7 +162,8 @@ nav {
 .hero-title::first-letter { color: var(--purple); }
 .hero-sub {
   font-size: 0.75rem; letter-spacing: 0.16em; color: var(--white-dim);
-  line-height: 2.4; max-width: 380px; position: relative; z-index: 1;
+  line-height: 2.4; position: relative; z-index: 1;
+  white-space: nowrap;
   opacity: 0; transform: translateY(14px);
   animation: fadeUp .9s ease .85s forwards;
 }
@@ -473,7 +474,7 @@ footer a { font-size: .62rem; letter-spacing: .18em; color: var(--purple); text-
   <section class="hero">
     <div class="hero-label">New Release · April 10, 2026</div>
     <h1 class="hero-title">Simurgh</h1>
-    <p class="hero-sub">A bird that has witnessed all of human&nbsp;history.</p>
+    <p class="hero-sub">A bird that has witnessed all of human history.</p>
     <a class="hero-cta" href="https://open.spotify.com/artist/6a8lq10FgEZOqyVvdkXh2j" target="_blank">Listen now</a>
     <div class="hero-nav">
       <div class="hero-nav-btn" onclick="go('about')"><span class="hero-nav-text"><span style="color:var(--purple)">A</span>bout</span></div>
