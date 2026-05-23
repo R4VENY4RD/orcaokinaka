@@ -459,6 +459,45 @@ footer a { font-size: .62rem; letter-spacing: .18em; color: var(--purple); text-
   footer { padding: 1.5rem 1.8rem; flex-direction: column; gap: .8rem; text-align: center; }
   .lang-select { border-left: none; padding-left: 0; }
 }
+/* ── Cursor effects ── */
+#cursor-glow {
+  position: fixed;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9997;
+  left: 0; top: 0;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(155,135,200,0.6) 0%, rgba(155,135,200,0.15) 50%, transparent 72%);
+  animation: cursorBreath 2.2s ease-in-out infinite;
+}
+@keyframes cursorBreath {
+  0%   { transform: translate(-50%,-50%) scale(1);   opacity: 0.75; }
+  50%  { transform: translate(-50%,-50%) scale(2.4); opacity: 1; }
+  100% { transform: translate(-50%,-50%) scale(1);   opacity: 0.75; }
+}
+
+.cursor-spark {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9996;
+  background: rgba(155,135,200,0.9);
+  animation: sparkFly var(--sdur, 0.8s) ease-out forwards;
+}
+@keyframes sparkFly {
+  0%   { transform: translate(-50%,-50%) translate(0,0) scale(1); opacity: 1; }
+  100% { transform: translate(-50%,-50%) translate(var(--sx),var(--sy)) scale(0); opacity: 0; }
+}
+
+#cursor-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 9996;
+  filter: blur(2.5px);
+}
 </style>
 </head>
 <body>
@@ -773,6 +812,102 @@ footer a { font-size: .62rem; letter-spacing: .18em; color: var(--purple); text-
       window.go(initialId);
     }
   }
+  // ── Cursor effects ──
+  (function() {
+    // Breathing glow
+    var glow = document.createElement('div');
+    glow.id = 'cursor-glow';
+    document.body.appendChild(glow);
+
+    var mx = 0, my = 0;
+
+    // Canvas trail
+    var canvas = document.createElement('canvas');
+    canvas.id = 'cursor-canvas';
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    document.body.appendChild(canvas);
+    var ctx = canvas.getContext('2d');
+
+    window.addEventListener('resize', function() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+
+    // Store trail points: {x, y, t}
+    var trailPoints = [];
+    var TRAIL_DURATION = 1800;
+
+    document.addEventListener('mousemove', function(e) {
+      mx = e.clientX; my = e.clientY;
+      glow.style.left = mx + 'px';
+      glow.style.top  = my + 'px';
+      trailPoints.push({ x: mx, y: my, t: Date.now() });
+    });
+
+    function drawTrail() {
+      var now = Date.now();
+      // Remove old points
+      trailPoints = trailPoints.filter(function(p) { return now - p.t < TRAIL_DURATION; });
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      if (trailPoints.length < 2) { requestAnimationFrame(drawTrail); return; }
+
+      // Draw smooth path with fading opacity
+      for (var i = 1; i < trailPoints.length; i++) {
+        var p0 = trailPoints[i - 1];
+        var p1 = trailPoints[i];
+        var age = now - p1.t;
+        var alpha = Math.max(0, 1 - age / TRAIL_DURATION);
+        // Width tapers with age
+        var lineW = Math.max(0.8, 5 * alpha);
+
+        ctx.beginPath();
+        ctx.moveTo(p0.x, p0.y);
+        ctx.lineTo(p1.x, p1.y);
+        ctx.strokeStyle = 'rgba(155,135,200,' + (alpha * 0.72).toFixed(3) + ')';
+        ctx.lineWidth = lineW;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.stroke();
+      }
+
+      requestAnimationFrame(drawTrail);
+    }
+    drawTrail();
+
+    // Random sparks
+    function spawnSparks(x, y) {
+      var count = Math.floor(Math.random() * 5) + 3;
+      for (var i = 0; i < count; i++) {
+        (function() {
+          var el = document.createElement('div');
+          el.className = 'cursor-spark';
+          var sz = Math.random() * 4 + 2;
+          var angle = Math.random() * Math.PI * 2;
+          var dist = Math.random() * 40 + 15;
+          var sx = Math.round(Math.cos(angle) * dist) + 'px';
+          var sy = Math.round(Math.sin(angle) * dist) + 'px';
+          var dur = (Math.random() * 0.4 + 0.5).toFixed(2) + 's';
+          el.style.cssText = 'width:'+sz+'px;height:'+sz+'px;left:'+x+'px;top:'+y+'px;--sx:'+sx+';--sy:'+sy+';--sdur:'+dur+';';
+          document.body.appendChild(el);
+          setTimeout(function() { el.remove(); }, 1000);
+        })();
+      }
+    }
+
+    // Random sparks at cursor position every 1.8-3.5s
+    function scheduleRandomSpark() {
+      var delay = Math.random() * 1700 + 1800;
+      setTimeout(function() {
+        spawnSparks(mx, my);
+        scheduleRandomSpark();
+      }, delay);
+    }
+    scheduleRandomSpark();
+  })();
+
 </script>
 </body>
 </html>
