@@ -491,7 +491,7 @@ footer a { font-size: .62rem; letter-spacing: .18em; color: var(--purple); text-
   width: 100%; height: 100%;
   pointer-events: none;
   z-index: 9996;
-  filter: blur(2.5px);
+  filter: blur(3px);
 }
 .cursor-spark {
   position: fixed;
@@ -875,34 +875,32 @@ footer a { font-size: .62rem; letter-spacing: .18em; color: var(--purple); text-
       canvas.height = window.innerHeight;
     });
 
-    var trailPoints = [];
-    var TRAIL_DURATION = 1800;
+    var inkDrops = [];
     var mx = 0, my = 0;
+    var lastInk = 0;
 
     document.addEventListener('mousemove', function(e) {
       mx = e.clientX; my = e.clientY;
       glow.style.left = mx + 'px';
       glow.style.top  = my + 'px';
-      trailPoints.push({ x: mx, y: my, t: Date.now() });
+      var now = Date.now();
+      if (now - lastInk > 18) {
+        lastInk = now;
+        inkDrops.push({ x: mx, y: my, r: Math.random() * 6 + 3, life: 1 });
+      }
     });
 
     function drawTrail() {
-      var now = Date.now();
-      trailPoints = trailPoints.filter(function(p) { return now - p.t < TRAIL_DURATION; });
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      if (trailPoints.length >= 2) {
-        for (var i = 1; i < trailPoints.length; i++) {
-          var p0 = trailPoints[i-1], p1 = trailPoints[i];
-          var alpha = Math.max(0, 1 - (now - p1.t) / TRAIL_DURATION);
-          ctx.beginPath();
-          ctx.moveTo(p0.x, p0.y);
-          ctx.lineTo(p1.x, p1.y);
-          ctx.strokeStyle = 'rgba(155,135,200,'+(alpha*0.72).toFixed(3)+')';
-          ctx.lineWidth = Math.max(0.8, 5 * alpha);
-          ctx.lineCap = 'round'; ctx.lineJoin = 'round';
-          ctx.stroke();
-        }
-      }
+      inkDrops.forEach(function(d) {
+        d.r += 0.6;
+        d.life -= 0.012;
+        ctx.beginPath();
+        ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(155,135,200,' + (d.life * 0.38) + ')';
+        ctx.fill();
+      });
+      inkDrops = inkDrops.filter(function(d){ return d.life > 0; });
       requestAnimationFrame(drawTrail);
     }
     drawTrail();
