@@ -537,13 +537,115 @@ footer a { font-size: .62rem; letter-spacing: .18em; color: var(--purple); text-
 </head>
 <body>
 
+<!-- Layout and effects shared with English prototype; original head preserved. -->
+<style>
+/* Keep the existing negative-z-index artwork above the body background. */
+body { isolation:isolate; }
+#page-links { padding:11rem 3.5rem 8rem; }
+#page-contact .link-name { overflow-wrap:anywhere; }
+#page-contact .contact-email:hover .link-name .glitch-wrap > span:first-child { color:var(--white) !important; }
+#page-contact .contact-email { position:relative; overflow:visible; }
+.contact-hint { position:absolute; top:calc(100% + .8rem); left:0; max-width:100%; padding:.7rem 1rem; border:.5px solid var(--white-faint); background:var(--black); color:var(--white); font-size:.75rem; letter-spacing:.04em; line-height:1.6; text-transform:none; opacity:0; visibility:hidden; filter:blur(7px); transform:translateY(14px) scale(.97); transform-origin:top left; transition:opacity .65s ease,filter .85s ease,transform .85s cubic-bezier(.16,1,.3,1),visibility .85s; pointer-events:none; }
+.contact-email:hover .contact-hint,.contact-email:focus-visible .contact-hint { opacity:1; visibility:visible; filter:blur(0); transform:translateY(0) scale(1); }
+@media(prefers-reduced-motion:reduce) { .contact-hint { transition:none; filter:none; transform:none; } }
+@media(hover:none) { .contact-hint { position:static; display:block; margin-top:.75rem; opacity:1; visibility:visible; filter:none; transform:none; } }
+
+@media(max-width:760px) { #page-links { padding:8rem 1.8rem 5rem; } }
+
+#page-home .hero { height:auto; min-height:100vh; padding-top:10rem; justify-content:center; }
+#page-home .hero-title { font-size:clamp(2.4rem,5vw,4rem); }
+.home-stage { max-width:1100px; display:grid; grid-template-columns:minmax(280px,380px) minmax(0,1fr); gap:clamp(2rem,5vw,5rem); align-items:center; margin-top:2.5rem; }
+.home-menu { display:flex; flex-direction:column; }
+.home-menu .work-item { padding:1.8rem 1.4rem; min-height:90px; gap:1rem; }
+.home-menu .work-title { font-size:1.25rem; letter-spacing:.18em; }
+.home-menu .work-item:hover .work-title { font-size:1.25rem; letter-spacing:.24em; }
+.featured-music { position:relative; width:100%; max-width:440px; justify-self:end; aspect-ratio:16/9; border:.5px solid var(--white-faint); background:var(--black); }
+.featured-trigger { display:block; width:100%; height:100%; padding:0; border:0; background:transparent; cursor:pointer; color:var(--white); }
+.featured-trigger img { display:block; width:100%; height:100%; object-fit:cover; }
+.featured-play { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:56px; height:56px; display:grid; place-items:center; border:.5px solid rgba(237,237,234,.5); border-radius:50%; background:rgba(7,7,7,.55); opacity:0; transition:opacity .3s; }
+.featured-trigger:hover .featured-play,.featured-trigger:focus-visible .featured-play { opacity:1; }
+.featured-music iframe { display:block; width:100%; height:100%; border:0; }
+.home-menu a:focus-visible,.featured-trigger:focus-visible { outline:1px solid var(--purple); outline-offset:5px; }
+#page-releases .works-section { padding-top:11rem; border-top:0; }
+#page-releases .sec-header { margin-bottom:2.5rem; }
+#page-releases .work-item { padding:1.5rem 1rem; gap:1rem; }
+#page-releases .work-title { font-size:clamp(1rem,2.3vw,1.65rem); }
+#page-releases .work-item:hover .work-title { font-size:clamp(1rem,2.3vw,1.65rem); }
+@media(max-width:760px) {
+  .nav-right { gap:1rem; } .nav-links { gap:.8rem; } .nav-links a { font-size:.55rem; letter-spacing:.08em; }
+  .lang-select { padding-left:.7rem; }
+  #page-home .hero { padding-top:8rem; padding-bottom:3rem; }
+  #page-home .hero-title { font-size:clamp(1.5rem,9vw,2.4rem); }
+  .home-stage { grid-template-columns:1fr; gap:2rem; }
+  .home-menu .work-item { padding:1.4rem; min-height:76px; }
+  .featured-music { max-width:360px; justify-self:center; }
+  .featured-play { opacity:.75; width:44px; height:44px; }
+  #page-releases .works-section { padding-top:8rem; }
+  #page-releases .work-item { padding:1.3rem .5rem; }
+  #page-releases .work-right { gap:.6rem; }
+  #page-releases .work-title { letter-spacing:.05em; }
+  #page-releases .work-item:hover .work-title { letter-spacing:.07em; }
+}
+@media(max-width:420px) {
+  nav { flex-wrap:wrap; gap:1rem; } .nav-right { width:100%; justify-content:space-between; }
+  #page-releases .work-right { flex-direction:column; align-items:flex-end; }
+}
+
+/* Prototype: restrained light, image and page-entry effects. */
+.home-menu .work-item::after { content:''; position:absolute; left:0; bottom:0; width:42%; height:1px; background:linear-gradient(90deg,transparent,var(--purple),rgba(237,237,234,.95),transparent); box-shadow:0 0 10px rgba(155,135,200,.55); transform:translateX(-110%); opacity:0; pointer-events:none; }
+.home-menu .work-item:is(:hover,:focus-visible)::after { animation:orca-line-sweep 1.15s cubic-bezier(.2,.65,.3,1) both; }
+@keyframes orca-line-sweep { 0% { transform:translateX(-110%); opacity:0; } 18% { opacity:1; } 78% { opacity:1; } 100% { transform:translateX(350%); opacity:0; } }
+.home-menu .work-link { position:relative; transition:transform .65s cubic-bezier(.16,1,.3,1); }
+.home-menu .work-item:is(:hover,:focus-visible) .work-link { transform:translateX(7px); }
+.featured-trigger { overflow:hidden; position:relative; }
+.featured-trigger img { transition:transform 1.3s cubic-bezier(.16,1,.3,1); }
+.featured-trigger:is(:hover,:focus-visible) img { transform:scale(1.035); }
+.featured-play { filter:blur(5px); transform:translate(-50%,-40%) scale(.9); transition:opacity .7s ease,filter .8s ease,transform .9s cubic-bezier(.16,1,.3,1); }
+.featured-trigger:is(:hover,:focus-visible) .featured-play { opacity:1; filter:blur(0); transform:translate(-50%,-50%) scale(1); }
+@keyframes orca-page-arrive { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+.page.visible > :is(.sec-header,.about-header,.about-body,.about-tagline,.links-grid,.trilogy,.contact-email),.page.visible > section > :is(.sec-header,.home-stage,#works-list) { animation:orca-page-arrive .85s cubic-bezier(.16,1,.3,1) both; }
+.page.visible > :is(.links-grid,.about-body,.trilogy),.page.visible > section > #works-list { animation-delay:.12s; }
+.page.visible > .links-grid:nth-of-type(n+4),.page.visible > .trilogy { animation-delay:.22s; }
+#page-about .tri-item::after,#page-about .about-sym-wrap::after { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at center,rgba(155,135,200,.24),transparent 70%); opacity:0; transform:scale(.8); transition:opacity 1.1s ease,transform 1.5s ease; pointer-events:none; }
+#page-about .about-sym-wrap { position:relative; }
+#page-about .tri-item:is(:hover,:focus-visible)::after,#page-about .about-sym-wrap:hover::after { opacity:1; transform:scale(1.15); }
+@media(hover:none) { .featured-play { filter:none; transform:translate(-50%,-50%); } }
+@media(prefers-reduced-motion:reduce) {
+ .home-menu .work-item::after { display:none; }
+ .home-menu .work-link,.featured-trigger img,.featured-play,#page-about .tri-item::after,#page-about .about-sym-wrap::after { transition:none; }
+ .home-menu .work-item:is(:hover,:focus-visible) .work-link,.featured-trigger:is(:hover,:focus-visible) img { transform:none; }
+ .page.visible > :is(.sec-header,.about-header,.about-body,.about-tagline,.links-grid,.trilogy,.contact-email),.page.visible > section > :is(.sec-header,.home-stage,#works-list) { animation:none; }
+}
+
+/* Copyright stays left aligned across all English sections. */
+.page > footer { text-align:left; }
+@media(max-width:760px) { .page > footer { align-items:flex-start; } }
+#page-contact.active { display:flex !important; flex-direction:column; min-height:100svh; padding-bottom:2rem; }
+#page-contact > footer { margin-top:auto !important; padding:2rem 0 0; }
+
+/* Soft purple interlude between English sections. */
+#page-transition { position:fixed; inset:0; z-index:9000; pointer-events:none; opacity:0; background:radial-gradient(ellipse at 40% 45%,rgba(205,185,235,.96),rgba(155,135,200,.96) 55%,rgba(106,84,151,.98)); transition:opacity .48s cubic-bezier(.2,.65,.3,1); }
+#page-transition.is-covering { opacity:1; transition-duration:.3s; }
+@media(prefers-reduced-motion:reduce) { #page-transition { display:none; } }
+.page-number-header { margin-bottom:3rem; }
+#page-home .page-number-header { width:100%; max-width:1100px; margin-bottom:0; }
+
+@media(max-width:760px) { nav { flex-wrap:wrap; gap:1rem; } .nav-right { flex-wrap:wrap; max-width:100%; } .nav-links { flex-wrap:wrap; row-gap:.85rem; } .lang-select { flex-shrink:0; } }
+
+@media(max-width:760px) { nav { flex-wrap:wrap; gap:1rem; } .nav-right { flex-wrap:wrap; max-width:100%; } .nav-links { flex-wrap:wrap; row-gap:.85rem; } .lang-select { flex-shrink:0; } }
+
+.home-menu .work-title { min-width:0; overflow-wrap:anywhere; } .home-menu .work-link { flex-shrink:0; }
+</style>
+
 <nav>
   <a class="nav-logo selectable" href="#home" onclick="return go('home')" style="text-decoration:none;color:inherit;"><span style="color:var(--purple)">O</span>rca Okinaka</a>
   <div class="nav-right">
     <ul class="nav-links">
       <li><a href="#home" onclick="return go('home')" id="nav-home">홈</a></li>
+      <li><a href="#releases" onclick="return go('releases')" id="nav-releases">발매작</a></li>
       <li><a href="#about" onclick="return go('about')" id="nav-about">프로필</a></li>
-      <li><a href="#contact" onclick="return go('contact')" id="nav-contact">링크</a></li>
+      <li><a href="#links" onclick="return go('links')" id="nav-links">링크</a></li>
+      <li><a href="#contact" onclick="return go('contact')" id="nav-contact">문의</a></li>
     </ul>
     <div class="lang-select" role="navigation" aria-label="Language">
   <span class="lang-current">KO <span class="lang-caret">▾</span></span>
@@ -565,19 +667,37 @@ footer a { font-size: .62rem; letter-spacing: .18em; color: var(--purple); text-
 <!-- HOME -->
 <div id="page-home" class="page">
   <section class="hero">
-    <div class="hero-label">신작 릴리스 · 2026년 9월 4일</div>
-    <h1 class="hero-title">Within Elsewhere</h1>
-    <p class="hero-sub">헤매어 들어온 낯선 땅에서.</p>
-    <a class="hero-cta" href="https://open.spotify.com/album/7FuEJqU6tNRXB0KSEJz32W?si=3dXAH8PrQe-x68cvQcfVzA" target="_blank" rel="noopener noreferrer" data-spotify="spotify:album:7FuEJqU6tNRXB0KSEJz32W">지금 듣기</a>
-    <div class="hero-nav">
-      <a class="hero-nav-btn" href="#about" onclick="return go('about')"><span class="hero-nav-text">프로필</span></a>
-      <a class="hero-nav-btn" href="#contact" onclick="return go('contact')"><span class="hero-nav-text">링크</span></a>
+  <div class="sec-header page-number-header"><span class="sec-num">01</span><h1 class="sec-lbl">홈</h1><div class="sec-line"></div></div>
+
+    <div class="home-stage">
+      <div class="home-menu" aria-label="홈">
+        <a class="work-item" href="#home" onclick="return go('home')"><span class="work-title">홈</span><span class="work-link" aria-hidden="true">→</span></a>
+        <a class="work-item" href="#releases" onclick="return go('releases')"><span class="work-title">발매작</span><span class="work-link" aria-hidden="true">→</span></a>
+        <a class="work-item" href="#about" onclick="return go('about')"><span class="work-title">프로필</span><span class="work-link" aria-hidden="true">→</span></a>
+        <a class="work-item" href="#links" onclick="return go('links')"><span class="work-title">링크</span><span class="work-link" aria-hidden="true">→</span></a>
+        <a class="work-item" href="#contact" onclick="return go('contact')"><span class="work-title">문의</span><span class="work-link" aria-hidden="true">→</span></a>
+      </div>
+      <div class="featured-music" id="featured-music">
+        <button class="featured-trigger" id="featured-trigger" type="button" aria-label="YouTube에서 음악 재생">
+          <img src="../bastet.jpg" alt="Bastet — existing Orca Okinaka site artwork">
+          <span class="featured-play" aria-hidden="true">▶</span>
+        </button>
+      </div>
     </div>
   </section>
+  <footer>
+    <span>© Orca Okinaka / RAVENYARD</span>
+    <span style="font-size:.58rem; letter-spacing:.18em; color:rgba(155,135,200,0.25);">オルカ・オキナカ &nbsp;オルカオキナカ</span>
+    <a href="mailto:enquiries@orcaokinaka.com">Enquiries</a>
+  </footer>
+</div>
+
+<!-- RELEASES -->
+<div id="page-releases" class="page">
   <section class="works-section">
     <div class="sec-header">
-      <span class="sec-num">01</span>
-      <h2 class="sec-lbl">작품</h2>
+      <span class="sec-num">02</span>
+      <h2 class="sec-lbl">발매작</h2>
       <div class="sec-line"></div>
     </div>
     <noscript>
@@ -612,15 +732,14 @@ footer a { font-size: .62rem; letter-spacing: .18em; color: var(--purple); text-
     </noscript>
     <div id="works-list"></div>
   </section>
-  <footer>
+  <footer style="margin-top:6rem;">
     <span>© Orca Okinaka / RAVENYARD</span>
-    <span style="font-size:.58rem; letter-spacing:.18em; color:rgba(155,135,200,0.25);">オルカ・オキナカ &nbsp;オルカオキナカ</span>
-    <a href="mailto:enquiries@orcaokinaka.com">문의</a>
   </footer>
 </div>
 
 <!-- ABOUT -->
 <div id="page-about" class="page">
+  <div class="sec-header page-number-header"><span class="sec-num">03</span><h1 class="sec-lbl">프로필</h1><div class="sec-line"></div></div>
   <div class="about-grid">
     <div>
       <div class="about-sym-wrap"><img src="../OrcaOkinaka_logo1s.png" style="width:100%;height:100%;object-fit:contain;opacity:0.9;" alt="오르카 오키나카 로고 심볼"></div>
@@ -667,10 +786,10 @@ footer a { font-size: .62rem; letter-spacing: .18em; color: var(--purple); text-
   </footer>
 </div>
 
-<!-- CONTACT -->
-<div id="page-contact" class="page">
+<!-- LINKS -->
+<div id="page-links" class="page">
   <div class="sec-header" style="margin-bottom:3rem;">
-    <span class="sec-num">03</span>
+    <span class="sec-num">04</span>
     <h1 class="sec-lbl">스트리밍 &amp; 링크</h1>
     <div class="sec-line"></div>
   </div>
@@ -705,14 +824,14 @@ footer a { font-size: .62rem; letter-spacing: .18em; color: var(--purple); text-
   <div class="links-grid">
     <a class="link-item" href="https://lnk.at/Orca_Okinaka" target="_blank" rel="noopener noreferrer"><div class="link-name">Lnk.at</div></a>
   </div>
-  <div class="sec-header" style="margin-top:4rem; margin-bottom:1.5rem;">
-    <span class="sec-num">—</span>
-    <h2 class="sec-lbl">문의</h2>
-    <div class="sec-line"></div>
-  </div>
-  <div class="links-grid">
-    <a class="link-item link-item-email" href="mailto:enquiries@orcaokinaka.com"><div class="link-name">enquiries@orcaokinaka.com</div></a>
-  </div>
+  <footer style="margin-top:6rem;">
+    <span>© Orca Okinaka / RAVENYARD</span>
+  </footer>
+</div>
+<!-- CONTACT -->
+<div id="page-contact" class="page">
+  <div class="sec-header page-number-header"><span class="sec-num">05</span><h1 class="sec-lbl">문의</h1><div class="sec-line"></div></div>
+  <a class="link-item link-item-email contact-email" href="mailto:enquiries@orcaokinaka.com" aria-describedby="contact-hint"><div class="link-name">ENQUIRIES@ORCAOKINAKA.COM</div><span class="contact-hint" id="contact-hint" role="tooltip">비즈니스 및 기타 문의는 이곳으로 보내 주세요.</span></a>
   <footer style="margin-top:6rem;">
     <span>© Orca Okinaka / RAVENYARD</span>
   </footer>
@@ -820,9 +939,9 @@ footer a { font-size: .62rem; letter-spacing: .18em; color: var(--purple); text-
       });
       // Wave flip animation on page entry
       var waveItems = [];
-      if (id === 'home') waveItems = Array.from(page.querySelectorAll('.work-item'));
+      if (id === 'releases') waveItems = Array.from(page.querySelectorAll('.work-item'));
       if (id === 'about') waveItems = Array.from(page.querySelectorAll('.tri-item'));
-      if (id === 'contact') waveItems = Array.from(page.querySelectorAll('.link-item'));
+      if (id === 'contact' || id === 'links') waveItems = Array.from(page.querySelectorAll('.link-item'));
       var total = waveItems.length;
       waveItems.forEach(function(el, i) {
         setTimeout(function() { el.classList.add('wave-flash'); }, i * 120);
@@ -838,17 +957,75 @@ footer a { font-size: .62rem; letter-spacing: .18em; color: var(--purple); text-
   }, { threshold: 0.1 });
   document.getElementById('nav-home').classList.add('active');
   document.querySelectorAll('#page-home .reveal').forEach(function(el) { obs.observe(el); });
-  ['about','contact'].forEach(function(id) {
+  ['about','links','contact'].forEach(function(id) {
     document.querySelectorAll('#page-' + id + ' .reveal').forEach(function(el) { el.classList.add('visible'); });
   });
   // Open page from URL hash on load
   if (window.location.hash) {
     var initialId = window.location.hash.replace('#', '');
-    if (['home','about','contact'].indexOf(initialId) !== -1 && initialId !== 'home') {
+    if (['home','releases','about','links','contact'].indexOf(initialId) !== -1 && initialId !== 'home') {
       window.go(initialId);
     }
   }
 
+
+  // First prototype: create the standard player only after a user click.
+  document.getElementById('featured-trigger').addEventListener('click', function() {
+    var frame = document.createElement('iframe');
+    frame.title = 'Orca Okinaka — featured track on YouTube';
+    frame.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen';
+    frame.allowFullscreen = true;
+    frame.referrerPolicy = 'strict-origin-when-cross-origin';
+    frame.src = 'https://www.youtube.com/embed/umpMaLftH1s?si=mFd74NHumCncyrLg&autoplay=1&playsinline=1';
+    document.getElementById('featured-music').replaceChildren(frame);
+    frame.focus();
+  });
+  var prototypeGo = window.go;
+  window.go = function(id) {
+    if (['home','releases','about','links','contact'].indexOf(id) === -1) return false;
+    if (id !== 'home') {
+      var frame = document.querySelector('#featured-music iframe');
+      if (frame) frame.remove();
+      var box = document.getElementById('featured-music');
+      if (!box.firstElementChild) box.appendChild(featuredButton);
+    }
+    return prototypeGo(id);
+  };
+  var featuredButton = document.getElementById('featured-trigger');
+  // Cover the outgoing page before changing content, then softly reveal it.
+  var instantSectionGo = window.go;
+  var transitionVeil = document.createElement('div');
+  transitionVeil.id = 'page-transition';
+  transitionVeil.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(transitionVeil);
+  var transitionBusy = false;
+  var pendingSection = null;
+  window.go = function(id) {
+    if (['home','releases','about','links','contact'].indexOf(id) === -1) return false;
+    var activePage = document.querySelector('.page.active');
+    if (transitionBusy) { pendingSection = id; return false; }
+    if ((activePage && activePage.id === 'page-' + id) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return instantSectionGo(id);
+    transitionBusy = true;
+    transitionVeil.classList.add('is-covering');
+    setTimeout(function() {
+      instantSectionGo(id);
+      setTimeout(function() {
+        transitionVeil.classList.remove('is-covering');
+        setTimeout(function() {
+          transitionBusy = false;
+          var next = pendingSection;
+          pendingSection = null;
+          if (next && next !== id) window.go(next);
+        }, 500);
+      }, 70);
+    }, 320);
+    return false;
+  };
+
+  window.addEventListener('hashchange', function() {
+    var id = location.hash.slice(1) || 'home';
+    if (['home','releases','about','links','contact'].indexOf(id) !== -1) window.go(id);
+  });
 
   // ── Cursor effects ──
   (function() {
