@@ -533,6 +533,18 @@ footer a { font-size: .62rem; letter-spacing: .18em; color: var(--purple); text-
   opacity: 0.7;
   animation: glitch2 0.18s steps(1) forwards;
 }
+/* ABOUT introduction: one continuous rule and a slow three-part reveal. */
+#page-about .about-intro { border-left:1px solid var(--purple); padding-left:1.5rem; margin:1rem 0; }
+#page-about .about-intro .about-intro-paragraph { border-left:0; padding-left:0; margin:0 0 1.3rem; font-style:italic; }
+#page-about .about-intro .about-intro-paragraph:last-child { margin-bottom:0; }
+#page-about.visible .about-intro-paragraph { animation:orca-about-intro-reveal 2.4s ease both; }
+#page-about.visible .about-intro-paragraph:nth-child(1) { animation-delay:.25s; }
+#page-about.visible .about-intro-paragraph:nth-child(2) { animation-delay:2.4s; }
+#page-about.visible .about-intro-paragraph:nth-child(3) { animation-delay:4.55s; }
+@keyframes orca-about-intro-reveal { from { opacity:0; transform:translateY(7px); } to { opacity:1; transform:translateY(0); } }
+@media(prefers-reduced-motion:reduce) { #page-about.visible .about-intro-paragraph { animation:none; } }
+
+
 </style>
 </head>
 <body>
@@ -787,12 +799,16 @@ body { isolation:isolate; }
       </div>
     </div>
     <div>
-      <p class="about-body about-tagline">카테고리에 얽매이지 않는 음악.</p>
-      <p class="about-body about-bio">장르를 초월한 작곡가. 앰비언트, 시네마틱, 일렉트로닉을 자유롭게 넘나든다. 평소에는 인식하지 못했던 소리의 세계로 안내한다.</p>
-      <p class="about-body">사카모토 류이치의 라디오 프로그램 Radio Sakamoto 오디션 코너에서 선정.</p>
-      <p class="about-body">OverClocked ReMix에서 어레인지 작품이 선정되어 OverClocked ReMixer로 공인.</p>
-      <p class="about-body">텔레비전 및 방송 작품에 음악 제공.</p>
-      <p class="about-body">전 세계 소셜 플랫폼의 수백만 개 영상에 음악이 사용됨.</p>
+      <div class="about-intro">
+        <p class="about-body about-intro-paragraph">세계의 온갖 음악에 관심을 보인다. 널리 사랑받는 상업 음악부터 거의 알려지지 않은 기묘한 소리까지. 마음에 드는 음악은 찾아 듣고, 장르와 시대에 얽매이지 않고 다양한 음악을 흡수하며 자랐다.</p>
+        <p class="about-body about-intro-paragraph">이윽고 인간이 만들어 내는 음악을 나름의 방식으로 느끼며, 독학으로 작곡을 시작했다.</p>
+        <p class="about-body about-intro-paragraph">그것이 바로 Orca Okinaka라는 동물이다.</p>
+      </div>
+      <p class="about-body about-tagline" style="margin-top:3rem;">카테고리에 얽매이지 않는 음악.</p>
+      <p class="about-body about-bio">앰비언트, 시네마틱, 일렉트로닉을 자유롭게 넘나든다. 평소에는 알아차리지 못하는 소리의 세계로 당신을 안내한다.</p>
+      <p class="about-body">사카모토 류이치의 라디오 프로그램 Radio Sakamoto 오디션 코너에서 작품이 선정되었다. OverClocked ReMix에서도 편곡 작품이 선정되어 OverClocked ReMixer로 인정받았다.</p>
+      <p class="about-body">텔레비전 및 방송 프로그램에 음악을 제공하는 한편, 애니메이션 음악의 편곡과 스마트폰 앱용 효과음 제작도 하고 있다.</p>
+      <p class="about-body">전 세계 소셜 플랫폼의 수백만 개 영상에 음악이 사용되고 있다.</p>
       <div class="trilogy">
         <div class="tri-item">
           <img src="../orca_symbol_t.png" class="tri-img" alt="오르카 심볼">

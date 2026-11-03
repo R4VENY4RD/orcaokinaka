@@ -533,6 +533,18 @@ footer a { font-size: .62rem; letter-spacing: .18em; color: var(--purple); text-
   opacity: 0.7;
   animation: glitch2 0.18s steps(1) forwards;
 }
+/* ABOUT introduction: one continuous rule and a slow three-part reveal. */
+#page-about .about-intro { border-left:1px solid var(--purple); padding-left:1.5rem; margin:1rem 0; }
+#page-about .about-intro .about-intro-paragraph { border-left:0; padding-left:0; margin:0 0 1.3rem; font-style:italic; }
+#page-about .about-intro .about-intro-paragraph:last-child { margin-bottom:0; }
+#page-about.visible .about-intro-paragraph { animation:orca-about-intro-reveal 2.4s ease both; }
+#page-about.visible .about-intro-paragraph:nth-child(1) { animation-delay:.25s; }
+#page-about.visible .about-intro-paragraph:nth-child(2) { animation-delay:2.4s; }
+#page-about.visible .about-intro-paragraph:nth-child(3) { animation-delay:4.55s; }
+@keyframes orca-about-intro-reveal { from { opacity:0; transform:translateY(7px); } to { opacity:1; transform:translateY(0); } }
+@media(prefers-reduced-motion:reduce) { #page-about.visible .about-intro-paragraph { animation:none; } }
+
+
 </style>
 </head>
 <body>
@@ -787,12 +799,16 @@ body { isolation:isolate; }
       </div>
     </div>
     <div>
-      <p class="about-body about-tagline">Musik, die sich jeder Kategorie widersetzt.</p>
-      <p class="about-body about-bio">Eine Komponistin, die Genres trotzt — fließend zwischen Ambient, Cinematik und Elektronik. Ein Wegweiser zu Klängen, die sonst unbemerkt bleiben.</p>
-      <p class="about-body">Im Audition-Segment der Radiosendung Radio Sakamoto von Ryuichi Sakamoto ausgewählt.</p>
-      <p class="about-body">Arrangements auf OverClocked ReMix ausgewählt und als OverClocked ReMixer anerkannt.</p>
-      <p class="about-body">Kompositionen in Fernseh- und Rundfunkproduktionen platziert.</p>
-      <p class="about-body">Musik in Millionen von Videos auf sozialen Plattformen weltweit verwendet.</p>
+      <div class="about-intro">
+        <p class="about-body about-intro-paragraph">Dieses Tier interessiert sich für Musik in all ihren Formen: von weithin bekannter kommerzieller Musik bis zu seltsamen Klängen, die kaum jemand kennt. Was ihm gefällt, hört es sich aus eigenem Antrieb an. Es wuchs mit den verschiedensten Arten von Musik auf, über Genres und Epochen hinweg.</p>
+        <p class="about-body about-intro-paragraph">Mit der Zeit begann es, die Musik, die Menschen erschaffen, auf seine eigene Weise zu empfinden, und brachte sich das Komponieren selbst bei.</p>
+        <p class="about-body about-intro-paragraph">Dies ist das Tier namens Orca Okinaka.</p>
+      </div>
+      <p class="about-body about-tagline" style="margin-top:3rem;">Musik, die sich jeder Kategorie widersetzt.</p>
+      <p class="about-body about-bio">Orca Okinaka bewegt sich frei zwischen Ambient, filmischer und elektronischer Musik. Sie führt in eine Klangwelt, die im Alltag oft unbemerkt bleibt.</p>
+      <p class="about-body">Eines ihrer Werke wurde in der Audition-Rubrik von Ryuichi Sakamotos Radiosendung Radio Sakamoto ausgewählt. Ihre Arrangements wurden auch auf OverClocked ReMix ausgewählt, wo sie als OverClocked ReMixer anerkannt wurde.</p>
+      <p class="about-body">Neben Musik für Fernseh- und Rundfunkproduktionen erarbeitet sie auch Arrangements von Anime-Songs und gestaltet Soundeffekte für Smartphone-Apps.</p>
+      <p class="about-body">Ihre Musik wird in Millionen von Videos auf sozialen Plattformen weltweit verwendet.</p>
       <div class="trilogy">
         <div class="tri-item">
           <img src="../orca_symbol_t.png" class="tri-img" alt="Orca-Symbol">

@@ -533,6 +533,18 @@ footer a { font-size: .62rem; letter-spacing: .18em; color: var(--purple); text-
   opacity: 0.7;
   animation: glitch2 0.18s steps(1) forwards;
 }
+/* ABOUT introduction: one continuous rule and a slow three-part reveal. */
+#page-about .about-intro { border-left:1px solid var(--purple); padding-left:1.5rem; margin:1rem 0; }
+#page-about .about-intro .about-intro-paragraph { border-left:0; padding-left:0; margin:0 0 1.3rem; font-style:italic; }
+#page-about .about-intro .about-intro-paragraph:last-child { margin-bottom:0; }
+#page-about.visible .about-intro-paragraph { animation:orca-about-intro-reveal 2.4s ease both; }
+#page-about.visible .about-intro-paragraph:nth-child(1) { animation-delay:.25s; }
+#page-about.visible .about-intro-paragraph:nth-child(2) { animation-delay:2.4s; }
+#page-about.visible .about-intro-paragraph:nth-child(3) { animation-delay:4.55s; }
+@keyframes orca-about-intro-reveal { from { opacity:0; transform:translateY(7px); } to { opacity:1; transform:translateY(0); } }
+@media(prefers-reduced-motion:reduce) { #page-about.visible .about-intro-paragraph { animation:none; } }
+
+
 </style>
 </head>
 <body>
@@ -787,12 +799,16 @@ body { isolation:isolate; }
       </div>
     </div>
     <div>
-      <p class="about-body about-tagline">超越分类的音乐。</p>
-      <p class="about-body about-bio">一位打破流派界限的作曲家——在氛围音乐、电影配乐与电子音乐之间自由游走。引领听众发现那些平日里被忽略的声音世界。</p>
-      <p class="about-body">在坂本龍一的广播节目Radio Sakamoto试听单元中入选。</p>
-      <p class="about-body">编曲作品在OverClocked ReMix入选，并获认证为OverClocked ReMixer。</p>
-      <p class="about-body">作品被电视及广播节目采用。</p>
-      <p class="about-body">音乐被全球社交平台数百万个视频使用。</p>
+      <div class="about-intro">
+        <p class="about-body about-intro-paragraph">对世界上形形色色的音乐都怀有兴趣。从广为人知的商业音乐，到鲜为人知的奇异声响。遇到喜欢的便主动聆听，不拘流派，不限年代，在吸收各式音乐的过程中成长。</p>
+        <p class="about-body about-intro-paragraph">后来，开始以自己的方式感受人类创造的音乐，并自学作曲。</p>
+        <p class="about-body about-intro-paragraph">这便是名为 Orca Okinaka 的动物。</p>
+      </div>
+      <p class="about-body about-tagline" style="margin-top:3rem;">超越分类的音乐。</p>
+      <p class="about-body about-bio">在氛围音乐、电影配乐风格与电子音乐之间自由游走。带你走进平日里未曾察觉的声音世界。</p>
+      <p class="about-body">作品曾在坂本龙一的广播节目《Radio Sakamoto》的作品甄选环节中入选。编曲作品亦入选 OverClocked ReMix，并由此获得 OverClocked ReMixer 的身份认可。</p>
+      <p class="about-body">除为电视及广播节目提供音乐外，也从事动画歌曲编曲及智能手机应用音效制作。</p>
+      <p class="about-body">音乐被用于全球社交平台上的数百万个视频。</p>
       <div class="trilogy">
         <div class="tri-item">
           <img src="../orca_symbol_t.png" class="tri-img" alt="奥卡符号">

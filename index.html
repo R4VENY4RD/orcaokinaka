@@ -533,6 +533,18 @@ footer a { font-size: .62rem; letter-spacing: .18em; color: var(--purple); text-
   opacity: 0.7;
   animation: glitch2 0.18s steps(1) forwards;
 }
+/* ABOUT introduction: one continuous rule and a slow three-part reveal. */
+#page-about .about-intro { border-left:1px solid var(--purple); padding-left:1.5rem; margin:1rem 0; }
+#page-about .about-intro .about-intro-paragraph { border-left:0; padding-left:0; margin:0 0 1.3rem; font-style:italic; }
+#page-about .about-intro .about-intro-paragraph:last-child { margin-bottom:0; }
+#page-about.visible .about-intro-paragraph { animation:orca-about-intro-reveal 2.4s ease both; }
+#page-about.visible .about-intro-paragraph:nth-child(1) { animation-delay:.25s; }
+#page-about.visible .about-intro-paragraph:nth-child(2) { animation-delay:2.4s; }
+#page-about.visible .about-intro-paragraph:nth-child(3) { animation-delay:4.55s; }
+@keyframes orca-about-intro-reveal { from { opacity:0; transform:translateY(7px); } to { opacity:1; transform:translateY(0); } }
+@media(prefers-reduced-motion:reduce) { #page-about.visible .about-intro-paragraph { animation:none; } }
+
+
 </style>
 </head>
 <body>
@@ -787,12 +799,16 @@ body { isolation:isolate; }
       </div>
     </div>
     <div>
-      <p class="about-body about-tagline">Music that resists category.</p>
-      <p class="about-body about-bio">A composer who defies genre — moving fluidly between ambient, cinematic, and electronic. A guide to sounds that usually go unnoticed.</p>
-      <p class="about-body">Selected by Ryuichi Sakamoto for broadcast on Radio Sakamoto.</p>
-      <p class="about-body">Arrangements featured on OverClocked ReMix.</p>
-      <p class="about-body">Compositions placed in television and broadcast productions.</p>
-      <p class="about-body">Music used across millions of videos on social platforms worldwide.</p>
+      <div class="about-intro">
+        <p class="about-body about-intro-paragraph">It takes an interest in music of every kind, from familiar commercial music to strange sounds scarcely known. It seeks out what catches its ear, and grew up absorbing music across genres and eras.</p>
+        <p class="about-body about-intro-paragraph">In time, it began to make its own sense of the music humans create, and taught itself to compose.</p>
+        <p class="about-body about-intro-paragraph">This is the animal known as Orca Okinaka.</p>
+      </div>
+      <p class="about-body about-tagline" style="margin-top:3rem;">Music that resists category.</p>
+      <p class="about-body about-bio">Orca Okinaka moves freely between ambient, cinematic and electronic music, guiding listeners towards sounds that usually go unnoticed.</p>
+      <p class="about-body">Orca Okinaka’s work was selected for the audition segment of Ryuichi Sakamoto’s radio programme Radio Sakamoto. Her arrangements were also selected for OverClocked ReMix, where she was recognised as an OverClocked ReMixer.</p>
+      <p class="about-body">Alongside providing music for television and broadcast productions, she also arranges anime songs and creates sound effects for smartphone apps.</p>
+      <p class="about-body">Her music is used in millions of videos on social platforms worldwide.</p>
       <div class="trilogy">
         <div class="tri-item">
           <img src="orca_symbol_t.png" class="tri-img" alt="Orca symbol">

@@ -540,6 +540,18 @@ footer a { font-size: .62rem; letter-spacing: .18em; color: var(--purple); text-
   font-family: 'M PLUS 1', 'Unbounded', sans-serif;
   font-weight: 200;
 }
+/* ABOUT introduction: one continuous rule and a slow three-part reveal. */
+#page-about .about-intro { border-left:1px solid var(--purple); padding-left:1.5rem; margin:1rem 0; }
+#page-about .about-intro .about-intro-paragraph { border-left:0; padding-left:0; margin:0 0 1.3rem; font-style:italic; }
+#page-about .about-intro .about-intro-paragraph:last-child { margin-bottom:0; }
+#page-about.visible .about-intro-paragraph { animation:orca-about-intro-reveal 2.4s ease both; }
+#page-about.visible .about-intro-paragraph:nth-child(1) { animation-delay:.25s; }
+#page-about.visible .about-intro-paragraph:nth-child(2) { animation-delay:2.4s; }
+#page-about.visible .about-intro-paragraph:nth-child(3) { animation-delay:4.55s; }
+@keyframes orca-about-intro-reveal { from { opacity:0; transform:translateY(7px); } to { opacity:1; transform:translateY(0); } }
+@media(prefers-reduced-motion:reduce) { #page-about.visible .about-intro-paragraph { animation:none; } }
+
+
 </style>
 </head>
 <body>
@@ -794,11 +806,15 @@ body { isolation:isolate; }
       </div>
     </div>
     <div>
-      <p class="about-body about-tagline">カテゴリーに収まらない音楽。</p>
-      <p class="about-body about-bio">ジャンルの枠を超えた作曲家。アンビエント、シネマティック、エレクトロを自在に横断する。普段は気づかない音の世界へ、あなたを連れていく。</p>
-      <p class="about-body">坂本龍一のラジオ番組Radio Sakamotoのオーディションコーナーで選出。</p>
-      <p class="about-body">OverClocked ReMixにてアレンジ作品が選出され、OverClocked ReMixerとして認定。</p>
-      <p class="about-body">テレビ・放送番組に楽曲を提供。</p>
+      <div class="about-intro">
+      <p class="about-body about-intro-paragraph">世界中のあらゆる音楽に興味を示す。広く親しまれる商業音楽から、ほとんど知られていない奇妙な音まで。気に入ったものは進んで聴き、ジャンルにも時代にもとらわれず、さまざまな音楽を吸収して育った。</p>
+      <p class="about-body about-intro-paragraph">やがて、人間が作り出す音楽を自分なりに感じ取り、独学で作曲を始めた。</p>
+      <p class="about-body about-intro-paragraph">それが、Orca Okinakaという動物なのである。</p>
+      </div>
+      <p class="about-body about-tagline" style="margin-top:3rem;">カテゴリーに収まらない音楽。</p>
+      <p class="about-body">アンビエント、シネマティック、エレクトロを自在に横断する。普段は気づかない音の世界へ、あなたを連れていく。</p>
+      <p class="about-body">坂本龍一のラジオ番組『Radio Sakamoto』のオーディションコーナーで作品が選出された。OverClocked ReMixではアレンジ作品が選出され、OverClocked ReMixerとして認定された。</p>
+      <p class="about-body">テレビ・放送番組への楽曲提供のほか、アニメソングの編曲や、スマートフォンアプリ向けの効果音制作も手掛けている。</p>
       <p class="about-body">世界中のソーシャルプラットフォームで、数百万本の動画に楽曲が使用されている。</p>
       <div class="trilogy">
         <div class="tri-item">

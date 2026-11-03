@@ -542,6 +542,18 @@ footer a { font-size: .62rem; letter-spacing: .18em; color: var(--purple); text-
   opacity: 0.7;
   animation: glitch2 0.18s steps(1) forwards;
 }
+/* ABOUT introduction: one continuous rule and a slow three-part reveal. */
+#page-about .about-intro { border-left:1px solid var(--purple); padding-left:1.5rem; margin:1rem 0; }
+#page-about .about-intro .about-intro-paragraph { border-left:0; padding-left:0; margin:0 0 1.3rem; font-style:italic; }
+#page-about .about-intro .about-intro-paragraph:last-child { margin-bottom:0; }
+#page-about.visible .about-intro-paragraph { animation:orca-about-intro-reveal 2.4s ease both; }
+#page-about.visible .about-intro-paragraph:nth-child(1) { animation-delay:.25s; }
+#page-about.visible .about-intro-paragraph:nth-child(2) { animation-delay:2.4s; }
+#page-about.visible .about-intro-paragraph:nth-child(3) { animation-delay:4.55s; }
+@keyframes orca-about-intro-reveal { from { opacity:0; transform:translateY(7px); } to { opacity:1; transform:translateY(0); } }
+@media(prefers-reduced-motion:reduce) { #page-about.visible .about-intro-paragraph { animation:none; } }
+
+
 </style>
 </head>
 <body>
@@ -798,12 +810,16 @@ body { isolation:isolate; }
       </div>
     </div>
     <div>
-      <p class="about-body about-tagline">موسيقى تأبى التصنيف.</p>
-      <p class="about-body about-bio">ملحّنة تتحدّى الأنواع الموسيقية — تنتقل بسلاسة بين الأمبيانت والسينمائي والإلكتروني. دليل إلى عالم الأصوات التي تمرّ عادةً دون أن تُلاحَظ.</p>
-      <p class="about-body">تم اختيارها في قسم الأوديشن ببرنامج ريوئيتشي ساكاموتو الإذاعي Radio Sakamoto.</p>
-      <p class="about-body">تم اختيار أعمال الترتيب الموسيقي على OverClocked ReMix والاعتراف بها كـ OverClocked ReMixer.</p>
-      <p class="about-body">مقطوعات موسيقية في إنتاجات تلفزيونية وإذاعية.</p>
-      <p class="about-body">موسيقى مستخدمة في ملايين مقاطع الفيديو على منصات التواصل الاجتماعي حول العالم.</p>
+      <div class="about-intro">
+        <p class="about-body about-intro-paragraph">يهتمّ هذا الحيوان بالموسيقى بكل أشكالها حول العالم، من الموسيقى التجارية المعروفة على نطاق واسع إلى الأصوات الغريبة التي لا يكاد يعرفها أحد. يبحث عمّا يعجبه ويستمع إليه، وقد نشأ متشرّبًا موسيقى شتّى، دون التقيّد بنوع أو عصر.</p>
+        <p class="about-body about-intro-paragraph">ومع الوقت، بدأ يتذوّق بطريقته الخاصة الموسيقى التي يبدعها البشر، وتعلّم التأليف الموسيقي ذاتيًّا.</p>
+        <p class="about-body about-intro-paragraph">ذلك هو الحيوان المعروف باسم Orca Okinaka.</p>
+      </div>
+      <p class="about-body about-tagline" style="margin-top:3rem;">موسيقى تأبى التصنيف.</p>
+      <p class="about-body about-bio">تتنقّل Orca Okinaka بحرية بين الأمبيانت والموسيقى السينمائية والإلكترونية، وتقودك إلى عالم من الأصوات التي تمرّ عادةً دون أن تُلاحَظ.</p>
+      <p class="about-body">اختيرت أعمالها في فقرة اختيار الأعمال الموسيقية ببرنامج ريوئيتشي ساكاموتو الإذاعي Radio Sakamoto. واختيرت توزيعاتها أيضًا على OverClocked ReMix، حيث نالت صفة OverClocked ReMixer.</p>
+      <p class="about-body">إلى جانب تقديم الموسيقى للإنتاجات التلفزيونية والإذاعية، تعمل أيضًا على توزيع أغاني الأنمي وتصميم المؤثرات الصوتية لتطبيقات الهواتف الذكية.</p>
+      <p class="about-body">تُستخدم موسيقاها في ملايين مقاطع الفيديو على المنصات الاجتماعية حول العالم.</p>
       <div class="trilogy">
         <div class="tri-item">
           <img src="../orca_symbol_t.png" class="tri-img" alt="رمز الأوركا">
