@@ -984,9 +984,6 @@ body { isolation:isolate; }
     document.querySelectorAll('.page').forEach(function(p) {
       p.classList.remove('active', 'visible'); p.style.display = 'none';
     });
-    if (window.history && history.replaceState) {
-      history.replaceState(null, '', '#' + id);
-    }
     document.querySelectorAll('.nav-links a').forEach(function(a) { a.classList.remove('active'); });
     var page = document.getElementById('page-' + id);
     var nav = document.getElementById('nav-' + id);
@@ -1067,6 +1064,9 @@ body { isolation:isolate; }
   var pendingSection = null;
   window.go = function(id) {
     if (['home','releases','about','links','contact'].indexOf(id) === -1) return false;
+    // Record user navigation; history traversal already has the requested hash.
+    var currentId = location.hash.slice(1) || 'home';
+    if (currentId !== id) history.pushState(null, '', '#' + id);
     var activePage = document.querySelector('.page.active');
     if (transitionBusy) { pendingSection = id; return false; }
     if ((activePage && activePage.id === 'page-' + id) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return instantSectionGo(id);
